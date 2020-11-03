@@ -74,8 +74,10 @@ void loop() {
 
   if (myKey[4] + 1 == 3 )
   {
-    //stop
-    Serial.println("diam ");
+    if(myKey[2] == myKey[4]){
+      //stop
+       Serial.println("diam "); 
+    }
   }
   else
   {

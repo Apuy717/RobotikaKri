@@ -36,20 +36,20 @@ void setup() {
 
 void loop() {
   ultrasonKiriAndKanan();
-  if(cm[0] > tembok && cm[1] > tembok){
-    Serial.println("bingung");
-  }else{
-   if(cm[0] > tembok){
-     Serial.println("pintu kiri");
-     belokKiri();
-   }else if(cm[1] > tembok){
-     belokKanan();
-     Serial.println("pintu kanan");
-    } else{
-      maju();
-      Serial.println(cm[1]);
-   } 
-  }
+//  if(cm[0] > tembok && cm[1] > tembok){
+//    Serial.println("bingung");
+//  }else{
+//   if(cm[0] > tembok){
+//     Serial.println("pintu kiri");
+//     belokKiri();
+//   }else if(cm[1] > tembok){
+//     belokKanan();
+//     Serial.println("pintu kanan");
+//    } else{
+//      maju();
+//      Serial.println(cm[1]);
+//   } 
+//  }
 }
 
 
