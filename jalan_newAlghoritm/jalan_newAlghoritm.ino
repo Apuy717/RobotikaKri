@@ -42,57 +42,55 @@ void setup() {
   pwm.setPWM(9, 0, pulseWidth(90));//kanan tengah belakang
   pwm.setPWM(13, 0, pulseWidth(90));//kiri tengah belakang
   degre(80,100);
+  delay(5000);
   setUpFlame();
 }
 
 
 void loop() {
-    Belok(130, 40);//kanan
-//  Belok(40, 130); //kiri
-//  getWall();
-//  setupServoPwm();
-//  getFlameData();
-//   if(cm[0] >= tembok){
-//      Serial.println("Belok Kiri");
-//      Belok(40, 130); //kiri
-//      pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
-//      
-//   }else if(cm[1] >= tembok){
-//      Serial.println("Belok kanannnn");
-//      Belok(130, 40);//kanan
-//       pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
-//       
-//   }else if(cm[2] <= 10){
-//      Serial.println("Berhenti");
-//      degre(80, 100);
-////      if (myKey[4] + 1 == 3 )
-////      {
-////        Serial.println("stoped");
-////      }   
-////      else
-////      {
-////        if (myKey[4] + 1 > 3)
-////        {
-////          // putar kiri
-////           Serial.println("Kiriiiiiiii");
-////            sudut = sudut + 20;
-////             pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
-////             
-////          
-////        }
-////        else
-////        {
-////          // putar kanan
-////          Serial.println("kanannnnnnnn");
-////            sudut = sudut - 20;
-////            pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
-////        }
-////      }
-//   }else{
-//      Serial.println("maju terus pantang mundur I LOVE YOU yang baca....!!! muach");
-//      setupServoPwm();
-//      pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
-//   }
+  getWall();
+  getFlameData();
+   if(cm[0] >= tembok){
+      Serial.println("Belok Kiri");
+      Belok(40, 130); //kiri
+      pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
+      
+   }else if(cm[1] >= tembok){
+      Serial.println("Belok kanannnn");
+      Belok(130, 40);//kanan
+       pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
+       
+   }else if(cm[2] <= 10){
+      Serial.println("Berhenti");
+      degre(80, 100);
+//      if (myKey[4] + 1 == 3 )
+//      {
+//        Serial.println("stoped");
+//      }   
+//      else
+//      {
+//        if (myKey[4] + 1 > 3)
+//        {
+//          // putar kiri
+//           Serial.println("Kiriiiiiiii");
+//            sudut = sudut + 20;
+//             pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
+//             
+//          
+//        }
+//        else
+//        {
+//          // putar kanan
+//          Serial.println("kanannnnnnnn");
+//            sudut = sudut - 20;
+//            pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
+//        }
+//      }
+   }else{
+      Serial.println("maju terus pantang mundur I LOVE YOU yang baca....!!! muach");
+      setupServoPwm();
+      pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
+   }
 
 }
 
