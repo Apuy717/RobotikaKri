@@ -1,66 +1,30 @@
-#include <Servo.h>
-Servo myServo;
+#include <Adafruit_PWMServoDriver.h>
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 int pins[] = {A1, A2, A3, A4, A5};
 
 int x;
 int sudut = 90;
 
-void setup() {
-  myServo.attach(5);
-  myServo.write(90);
+#define MIN_PULSE_WIDTH       650
+#define MAX_PULSE_WIDTH       2350
+#define DEFAULT_PULSE_WIDTH   500
+#define FREQUENCY             50
 
-  for (x=0; x<5; x++)
-  {
-    pinMode(pins[x], INPUT);
-   // pinMode(dgts[x], INPUT);
-    
-  }
-  
-  
-  Serial.begin(9600);
-  delay(10);
-}
 
 int myValue[] = {0, 0, 0, 0, 0};
 int myKey[] = {1, 2, 3, 4, 5};
 
-int i;
-int digitValue;
+int i, digitValue;
+void setup() {
+  pwm.begin(); 
+  pwm.setPWMFreq(FREQUENCY);
+  setUpFlame();
+  Serial.begin(9600);
+  delay(10);
+}
 
 void loop() {
-  Serial.println("");
-  for (i=0; i<5; i++)
-  {
-    digitValue = 0;
-    //digitValue = digitalRead(dgts[i]);
-    //delay(10);
-    
-    Serial.print(digitValue);
-    Serial.print(" ");
-    
-    //if (digitValue == 1)
-      myValue[i] = analogRead(pins[i]);
-   // else
-     // myValue[i] = 0;
-    delay(5);
-      
-    myKey[i] = i;
-  }
-  Serial.println("");
-
-  Serial.println("Nilai sebelum diurutkan: ");
-  for(i=0; i<5; i++)
-  {
-    Serial.print("Nilai pin #");
-    Serial.print(myKey[i] + 1);
-    Serial.print(": ");
-    Serial.print(myValue[i]);
-    
-    Serial.println("");    
-  }
-  
-  Urutkan();
-  
+  getFlameData();
   Serial.println("Nilai setelah diurutkan: ");
   for(i=0; i<5; i++)
   {
@@ -74,31 +38,38 @@ void loop() {
 
   if (myKey[4] + 1 == 3 )
   {
-    if(myKey[2] == myKey[4]){
-      //stop
-       Serial.println("diam "); 
-    }
-  }
+    Serial.println("stoped");
+  }   
   else
   {
     if (myKey[4] + 1 > 3)
     {
       // putar kiri
+       Serial.println("Kiriiiiiiii");
         sudut = sudut + 20;
-        myServo.write(sudut);
+         pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
+         
       
     }
     else
     {
       // putar kanan
+      Serial.println("kanannnnnnnn");
         sudut = sudut - 20;
-        myServo.write(sudut);
+        pwm.setPWM(15, 0, pulseWidth(sudut));//servo leher X
     }
   }
-//  delay(1000);
+  delay(1000);
   
 }
 
+void setUpFlame(){
+  pwm.setPWM(15, 0, pulseWidth(90));//servo leher X
+  for (x=0; x<5; x++)
+  {
+    pinMode(pins[x], INPUT);
+  }
+}
 
 void Urutkan()
 {
@@ -123,4 +94,43 @@ void Urutkan()
       }
     }
   }
+}
+
+void getFlameData(){
+  Serial.println("");
+  for (i=0; i<5; i++)
+  {
+    digitValue = 0;
+    //digitValue = digitalRead(dgts[i]);
+    //delay(10);
+    
+    Serial.print(digitValue);
+    Serial.print(" ");
+      myValue[i] = analogRead(pins[i]);
+    delay(5);
+      
+    myKey[i] = i;
+  }
+  Serial.println("");
+
+  Serial.println("Nilai sebelum diurutkan: ");
+  for(i=0; i<5; i++)
+  {
+    Serial.print("Nilai pin #");
+    Serial.print(myKey[i] + 1);
+    Serial.print(": ");
+    Serial.print(myValue[i]);
+    
+    Serial.println("");    
+  }
+  
+  Urutkan();
+}
+
+int pulseWidth(int angle)
+{
+  int pulse_wide, analog_value;
+  pulse_wide   = map(angle, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+  analog_value = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
+  return analog_value;
 }

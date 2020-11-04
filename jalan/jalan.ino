@@ -36,20 +36,20 @@ void setup() {
 
 void loop() {
   ultrasonKiriAndKanan();
-//  if(cm[0] > tembok && cm[1] > tembok){
-//    Serial.println("bingung");
-//  }else{
-//   if(cm[0] > tembok){
-//     Serial.println("pintu kiri");
-//     belokKiri();
-//   }else if(cm[1] > tembok){
-//     belokKanan();
-//     Serial.println("pintu kanan");
-//    } else{
-//      maju();
-//      Serial.println(cm[1]);
-//   } 
-//  }
+  maju();  if(cm[0] > tembok && cm[1] > tembok){
+    Serial.println("bingung");
+  }else{
+   if(cm[0] > tembok){
+     Serial.println("pintu kiri");
+     belokKiri();
+   }else if(cm[1] > tembok){
+     belokKanan();
+     Serial.println("pintu kanan");
+    } else{
+      maju();
+      Serial.println(cm[1]);
+   } 
+  }
 }
 
 
@@ -324,7 +324,7 @@ void maju(){
   pwm.setPWM(6, 0, pulseWidth(91));
   pwm.setPWM(10, 0, pulseWidth(89));
   
-  delay(40);
+  delay(50);
   pwm.setPWM(0, 0, pulseWidth(91));
   pwm.setPWM(8, 0, pulseWidth(85));
   pwm.setPWM(4, 0, pulseWidth(95));
@@ -337,7 +337,7 @@ void maju(){
   pwm.setPWM(14, 0, pulseWidth(88.5));
   pwm.setPWM(6, 0, pulseWidth(77));
   pwm.setPWM(10, 0, pulseWidth(103));
-  delay(40);
+  delay(50);
   pwm.setPWM(0, 0, pulseWidth(81));
   pwm.setPWM(8, 0, pulseWidth(104));
   pwm.setPWM(4, 0, pulseWidth(76));
@@ -350,7 +350,7 @@ void maju(){
   pwm.setPWM(14, 0, pulseWidth(91));
   pwm.setPWM(6, 0, pulseWidth(91));
   pwm.setPWM(0, 0, pulseWidth(89));
-  delay(40);
+  delay(50);
   pwm.setPWM(0, 0, pulseWidth(85));
   pwm.setPWM(8, 0, pulseWidth(91.5));
   pwm.setPWM(4, 0, pulseWidth(88.5));
@@ -363,7 +363,7 @@ void maju(){
   pwm.setPWM(14, 0, pulseWidth(77));
   pwm.setPWM(6, 0, pulseWidth(89));
   pwm.setPWM(10, 0, pulseWidth(91));
-  delay(40);
+  delay(50);
   pwm.setPWM(0, 0, pulseWidth(104));
   pwm.setPWM(8, 0, pulseWidth(81));
   pwm.setPWM(4, 0, pulseWidth(99));
@@ -376,7 +376,7 @@ void maju(){
   pwm.setPWM(14, 0, pulseWidth(91));
   pwm.setPWM(6, 0, pulseWidth(91));
   pwm.setPWM(10, 0, pulseWidth(89));
-  delay(40);
+  delay(50);
 }
 
 void setupServoPwm(){

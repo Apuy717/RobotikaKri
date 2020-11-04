@@ -1,62 +1,77 @@
 //new ultrason
 
-const int pingPinKiri = 2; // Trigger Pin of Ultrasonic Sensor
-const int echoPinKiri = 3; // Echo Pin of Ultrasonic Sensor
-const int pingPinKanan = 8; // Trigger Pin of Ultrasonic Sensor
-const int echoPinKanan = 9; // Echo Pin of Ultrasonic Sensor
+const int trigerKiri = 14; // Trigger Pin of Ultrasonic Sensor
+const int echoKiri = 15; // Echo Pin of Ultrasonic Sensor
+const int trigerKanan = 16; // Trigger Pin of Ultrasonic Sensor
+const int echoKanan = 17; // Echo Pin of Ultrasonic Sensor
+const int trigerDepan = 18; // Trigger Pin of Ultrasonic Sensor
+const int echoDepan = 19; // Echo Pin of Ultrasonic Sensor
 const int tembok = 20;
 
 void setup() {
-   Serial.begin(9600); // Starting Serial Terminal
-   pinMode(pingPinKiri, OUTPUT);
-   pinMode(echoPinKiri, INPUT);
-   pinMode(pingPinKanan, OUTPUT);
-   pinMode(echoPinKanan, INPUT);
+  Serial.begin(9600);
+  setUpUltrason();   
 }
 
 boolean getValue = true;
-long duration0;
-long duration1;
-long cm[] = {0, 0};
+long durationKiri, durationKanan, durationDepan;
+long cm[] = {0, 0, 0};
 void loop() {
-    // kiri
-   digitalWrite(pingPinKiri, LOW);
-   delayMicroseconds(2);
-   digitalWrite(pingPinKiri, HIGH);
-   delayMicroseconds(10);
-   digitalWrite(pingPinKiri, LOW);
-   duration0 = pulseIn(echoPinKiri, HIGH);
-   cm[0] = microsecondsToCentimeters(duration0);
-   delay(10);
-   //kanan
-   digitalWrite(pingPinKanan, LOW);
-   delayMicroseconds(2);
-   digitalWrite(pingPinKanan, HIGH);
-   delayMicroseconds(10);
-   digitalWrite(pingPinKanan, LOW);
-   duration1 = pulseIn(echoPinKanan, HIGH);
-   cm[1] = microsecondsToCentimeters(duration1);
-
-   if(cm[0] > tembok){
-     Serial.println("pintu kiri");
-     getValue = false;
-   }else if(cm[1] >tembok){
-     Serial.println("pintu kanan");
-     getValue = false;
-   }else{
-     getValue = true;
-   }
-  if(getValue){
-   Serial.println("jalan terus gak ada pintu");
-  }
+  getWall();
+//   if(cm[0] > tembok){
+//     Serial.println("pintu kiri");
+//     getValue = false;
+//   }else if(cm[1] >tembok){
+//     Serial.println("pintu kanan");
+//     getValue = false;
+//   }else{
+//     getValue = true;
+//   }
+//  if(getValue){
+//   Serial.println("jalan terus gak ada pintu");
+//  }
 
    Serial.print("nilai ke [0] / kiri");
    Serial.println(cm[0]); 
    Serial.print("nilai ke [1] / kanan");
    Serial.println(cm[1]);
+   Serial.print("nilai ke [2] / Depan");
+   Serial.println(cm[2]);
    delay(1000);
 }
 
 long microsecondsToCentimeters(long microseconds) {
    return microseconds / 29 / 2;
+}
+
+void setUpUltrason(){
+   pinMode(trigerKiri, OUTPUT);
+   pinMode(echoKiri, INPUT);
+   pinMode(trigerKanan, OUTPUT);
+   pinMode(echoKanan, INPUT);
+   pinMode(trigerDepan, INPUT);
+   pinMode(echoDepan, INPUT);
+}
+
+
+void getWall(){
+   // kiri
+   digitalWrite(trigerKiri, LOW);
+   digitalWrite(trigerKiri, HIGH);
+   digitalWrite(trigerKiri, LOW);
+   durationKiri = pulseIn(echoKiri, HIGH);
+   cm[0] = microsecondsToCentimeters(durationKiri);
+   //kanan
+   digitalWrite(trigerKanan, LOW);
+   digitalWrite(trigerKanan, HIGH);
+   digitalWrite(trigerKanan, LOW);
+   durationKanan = pulseIn(echoKanan, HIGH);
+   cm[1] = microsecondsToCentimeters(durationKanan);
+
+   //Depan
+   digitalWrite(trigerDepan, LOW);
+   digitalWrite(trigerDepan, HIGH);
+   digitalWrite(trigerDepan, LOW);
+   durationDepan = pulseIn(echoDepan, HIGH);
+   cm[2] = microsecondsToCentimeters(durationDepan);
 }
